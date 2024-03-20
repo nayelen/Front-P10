@@ -1,0 +1,11 @@
+li {
+  display: flex;
+  flex-direction: column;
+  gap:var(--gap-xs);
+}
+
+li > ul {
+ display: flex;
+ flex-direction: column;
+ gap: var(--gap-xs);
+}

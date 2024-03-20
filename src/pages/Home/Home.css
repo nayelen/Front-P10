@@ -1,0 +1,41 @@
+.event{
+  width: 450px;
+  height: 550px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: var(--gap-s);
+  margin: var(--margin-xs);
+}
+
+.event > .eventImg {
+  width: 100%;
+  height: 50%;
+  object-fit: cover;
+}
+.event > p {
+  text-align: center;
+}
+
+.events {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  gap: var(--gap-l);
+  padding-top: var(--padding-m);
+}
+.buttons{
+  width: 60%;
+  display:flex ;
+  justify-content: center;
+  gap: var(--gap-l)
+}
+.attend, .cancel{
+  padding: var(--padding-xs);
+  border-radius: var(--secondary-br);
+  font-size: var(--font-size-sec);
+  background-color: var(--color-2);
+  color: var(--color-4);
+}

@@ -1,0 +1,15 @@
+aside {
+  display: flex;
+  border: solid 2px var(--color-4);
+  border-radius: var( --secondary-br);
+  margin: var(--margin-s);
+  justify-content: space-around;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+
+.linkProfile {
+  color: var(--color-3);
+  text-align: center;
+}

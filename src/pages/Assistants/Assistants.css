@@ -1,0 +1,8 @@
+.user_list {
+  font-size: var(--font-size-pri);
+  margin: var(--margin-m);
+  color: var(--color-4);
+  gap: var(--gap-l);
+  display: flex;
+  flex-direction: column;
+}

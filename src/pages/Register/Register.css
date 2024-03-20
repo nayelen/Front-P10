@@ -1,0 +1,8 @@
+.registerDiv {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  gap: var(--gap-xl);
+  margin-top: var(--margin-section);
+}

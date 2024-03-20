@@ -1,0 +1,65 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700;900&display=swap');
+
+:root {
+  --color-1: #ffffff ;
+  --color-2 : #b4bf9b ;
+  --color-3:  #939292 ;
+  --color-4 : #464d70 ;
+  --color-5: #000000 ; 
+  --color-6: #5e7094;
+
+ /* SPACINGS */
+ --margin-xxs: 5px;
+ --margin-xs: 10px;
+ --margin-s: 20px;
+ --margin-m: 30px;
+ --margin-l: 40px;
+ --margin-xl: 50px;
+ --margin-section: 100px;
+
+ --padding-xs: 10px;
+ --padding-s: 20px;
+ --padding-m: 30px;
+ --padding-l: 40px;
+ --padding-xl: 50px;
+
+ --gap-xs: 10px;
+ --gap-s: 20px;
+ --gap-m: 30px;
+ --gap-l: 40px;
+ --gap-xl: 50px;
+
+ /* BORDER RADIUS */
+ --primary-br: 30px;
+ --secondary-br: 20px;
+/* FONTS */
+ --font-size-pri: 25px;
+ --font-size-sec: 20px;
+ 
+}
+*{
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+  list-style: none;
+  text-decoration: none;
+}
+body {
+  font-family: 'Roboto', sans-serif;
+  color: var(--color-3);
+  background-color: var(--color-1);
+}
+main {
+  width: 100%;
+  position: absolute;
+  min-height: 80svh;
+  margin-top: var(--margin-section);
+}
+input, button, select {
+    padding: var(--padding-xs);
+    border-radius: var(--secondary-br);
+    font-size: var(--font-size-sec);
+    background-color: var(--color-2);
+    color: var(--color-4);
+    margin: var(--margin-xs);
+}
