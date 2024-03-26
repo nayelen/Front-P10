@@ -23,44 +23,48 @@ const formEvent = (elementoPadre) => {
   form.innerHTML = `
   ${FieldForm("Nombre del Evento")}
   ${FieldForm("Fecha del Evento")}
-  ${FieldForm("Imagen del Evento")}
+  ${FieldForm("Imagen del Evento", "file", "multipart/form-data")}
   ${FieldForm("Lugar del Evento")}
   ${FieldForm("Descripción del Evento")}
   <button>Enviar</button>
   `
-
   form.addEventListener("submit", postEvent)
   elementoPadre.append(form);
 }
 
 const postEvent = async (e) => {
   e.preventDefault();
+
+  const formData = new FormData();
   // recojo los datos del formulario
   const event = {
     name: e.target[0].value,
     date: e.target[1].value,
-    img: e.target[2].value,
     place: e.target[3].value,
     description: e.target[4].value,
   }
-  console.log(event)
 
-  const newEvent = JSON.stringify(event);
+  for (const key in event) {
+    formData.append(key, event[key]);
+  }
+
+  const fileInput = e.target[2];
+  formData.append("img", fileInput.files[0])
+  console.log(event)
 
   const response = await fetch(BASE_URL + "/events", {
     method: "POST",
-    body: newEvent,
+    body: formData,
     headers: {
-      "Content-Type": "application/json",
       "Authorization": `Bearer ${localStorage.getItem("token")}`,
     }
-
   })
+
   const eventPublicated = await response.json();
   console.log(eventPublicated)
 
   Swal.fire({
-    position: "top-end",
+    position: "center",
     icon: "success",
     title: "Evento Creado!",
     showConfirmButton: false,

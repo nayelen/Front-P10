@@ -14,7 +14,8 @@ export const Assistants = async () => {
 }
 
 const selectEvent = (events, elementoPadre) => {
-
+  const inputsDiv = document.createElement("div");
+  inputsDiv.className = "inputContainer";
   const select = document.createElement("select")
   const defaultOption = document.createElement("option");
   defaultOption.textContent = "Selecciona el evento";
@@ -24,7 +25,7 @@ const selectEvent = (events, elementoPadre) => {
 
   for (const event of events) {
     const option = document.createElement("option")
-    option.textContent = event.name;
+    option.textContent = event.name + ": " + event.date;
     option.value = event._id;
     select.appendChild(option);
   }
@@ -36,7 +37,8 @@ const selectEvent = (events, elementoPadre) => {
     }
   });
 
-  elementoPadre.append(select, divData)
+  inputsDiv.append(select, divData)
+  elementoPadre.append(inputsDiv)
 }
 
 const showInfo = async (idEvent) => {

@@ -1,0 +1,10 @@
+.data {
+  margin: var(--margin-s);
+}
+img {
+  width: 400px;
+}
+.inputContainer{
+margin: var(--margin-m);
+padding: var(--padding-s);
+}

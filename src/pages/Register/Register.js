@@ -1,7 +1,6 @@
 import { BASE_URL } from "../../../main";
-import { LoginPage } from "../Login/Login";
+import { Home } from "../Home/Home";
 import "./Register.css";
-
 
 export const RegisterPage = () => {
   const divApp = document.querySelector('#app');
@@ -25,25 +24,18 @@ const register = (elementoPadre) => {
   const inputPassword = document.createElement("input");
   const button = document.createElement("button");
 
-  inputName.placeholder = "Enter your name";
-  inputEmail.placeholder = "Enter your email";
-  inputPassword.placeholder = "Enter your password";
-  // inputPasswordConfirmation.placeholder = "Confirm your password";
-  button.textContent = "Register";
+  inputName.placeholder = "Introduce tu nombre";
+  inputEmail.placeholder = "Introduce tu email";
+  inputPassword.placeholder = "Introduce tu password";
+  button.textContent = "Regístrate";
   button.className = "btnRegister";
-
-  // if (inputPassword.value !== inputPasswordConfirmation.value) {
-  //   const p = document.createElement("p");
-  //   p.textContent = "La contraseña no coincide";
-  //   form.append(p);
-  // }
 
   elementoPadre.append(form);
   form.append(inputName, inputEmail, inputPassword, button);
   form.addEventListener("submit", submit);
 
 }
-const submit = async (e, form) => {
+const submit = async (e) => {
   e.preventDefault();
 
   const objetoEnvio = {
@@ -54,27 +46,51 @@ const submit = async (e, form) => {
 
   const newUser = JSON.stringify(objetoEnvio);
 
-  const res = await fetch(BASE_URL + "/users/register", {
-    method: "POST",
-    body: newUser,
-    headers: { 'Content-Type': 'application/json' },
-  })
+  try {
+    const response = await fetch(BASE_URL + "/users/register", {
+      method: "POST",
+      body: newUser,
+      headers: { 'Content-Type': 'application/json' },
+    });
+    console.log(response)
+    if (!response.ok) {
+      throw new Error("Error al registrar usuario");
+    }
+    const loginResponse = await fetch(BASE_URL + "/users/login", {
+      method: "POST",
+      body: JSON.stringify({
+        email: objetoEnvio.email,
+        password: objetoEnvio.password,
+      }),
+      headers: { 'Content-Type': 'application/json' },
+    })
+    console.log(loginResponse)
+    if (!loginResponse.ok) {
+      throw new Error("Error al iniciar sesión");
+    }
 
-  if (res.status === 400) {
-    const form = document.querySelector("form")
-    const pError = document.createElement("p");
-    pError.classList.add("error");
-    pError.textContent = "Email o contraseña no válidas";
-    form.append(pError);
-    return
-  }
-  const pError = document.querySelector(".error");
-  if (pError) {
-    pError.remove();
-  }
+    if (response.status === 400) {
+      const registerDiv = document.querySelector(".registerDiv")
+      const pError = document.createElement("p");
+      pError.classList.add("error");
+      pError.textContent = "Email o contraseña no válidas";
+      registerDiv.append(pError);
+      return
+    }
+    const pError = document.querySelector(".error");
+    if (pError) {
+      pError.remove();
+    }
+    const loginSuccess = await loginResponse.json();
+    const { token, user } = loginSuccess;
+    console.log(loginSuccess);
+    localStorage.setItem("token", token);
+    localStorage.setItem("user", JSON.stringify(user));
+    console.log(loginSuccess);
 
-  const respuestaFinal = await res.json();
-  localStorage.setItem("token", respuestaFinal.token);
-  localStorage.setItem("user", JSON.stringify(respuestaFinal.user))
-  LoginPage()
+    Home()
+    location.reload();
+  } catch (error) {
+    console.error("El registro ha fallado")
+  }
 }

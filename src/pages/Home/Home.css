@@ -7,6 +7,8 @@
   align-items: center;
   gap: var(--gap-s);
   margin: var(--margin-xs);
+  background: var(--color-1);
+  padding: var(--padding-s);
 }
 
 .event > .eventImg {
@@ -16,8 +18,11 @@
 }
 .event > p {
   text-align: center;
+  padding:0, var(--padding-xs);
 }
-
+.place{
+  font-size:var(--font-size-ter) ;
+}
 .events {
   display: flex;
   flex-wrap: wrap;

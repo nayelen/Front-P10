@@ -9,7 +9,7 @@ import "./Profile.css";
 const routesProfile = [
   {
     text: "Mis Eventos",
-    page: Events,
+    page: null,
   },
   {
     text: "Actualiza tus datos",
@@ -33,9 +33,22 @@ const routesProfile = [
   },
 ]
 
+const initializeProfile = async () => {
+  if (window.location.pathname === "Mi Perfil") {
+    const { Events } = await import("../../pages/Events/Events");
+    routesProfile[0].page = Events; // Ahora que Events está disponible, asignamos la función correspondiente en routesProfile
+    Profile(); // Llamamos a Profile después de que Events se haya cargado
+  }
+};
+
+initializeProfile();
+
+
+
 export const Profile = () => {
   const main = document.querySelector("main");
   main.innerHTML = "";
+
 
   const user = JSON.parse(localStorage.getItem("user"))
 

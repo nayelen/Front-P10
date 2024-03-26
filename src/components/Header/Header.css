@@ -20,7 +20,10 @@ a{
   padding: var(--padding-s);
   font-size: var(--font-size-sec);
   border-radius: var(--secondary-br);
+  margin: var(--margin-xxs);
 }
 a:hover{
   background-color: var(--color-6);
+  transform: scale(1.1);
+  color: var(--color-1);
 }

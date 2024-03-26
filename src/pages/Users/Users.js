@@ -18,7 +18,8 @@ export const Users = async () => {
 }
 
 const selectUser = (users, elementoPadre) => {
-
+  const inputsDiv = document.createElement("div");
+  inputsDiv.className = "inputContainer";
   const select = document.createElement("select")
   const defaultOption = document.createElement("option");
   defaultOption.textContent = "Selecciona el usuario";
@@ -40,7 +41,8 @@ const selectUser = (users, elementoPadre) => {
     }
   });
 
-  elementoPadre.append(select, divData)
+  inputsDiv.append(select, divData)
+  elementoPadre.append(inputsDiv)
 }
 
 const showInfo = async (userId) => {
@@ -76,7 +78,7 @@ const showInfo = async (userId) => {
 
     if (user.events && user.events.length > 0) {
       const eventsList = document.createElement("ul");
-      eventsList.textContent = "Eventos inscritos: "
+      eventsList.textContent = "Eventos inscritos: ";
       for (const event of user.events) {
         console.log("ID de evento:", event._id);
 

@@ -54,10 +54,11 @@ const submit = async (e) => {
   })
 
   if (res.status === 400) {
+    const loginDiv = document.querySelector(".loginDiv")
     const pError = document.createElement("p")
     pError.textContent = "Usuario o contraseña incorrectos"
     pError.className = "error";
-    form.append(pError)
+    loginDiv.append(pError)
     return;
   }
   const pError = document.querySelector(".error")
@@ -71,6 +72,7 @@ const submit = async (e) => {
 
   localStorage.setItem("token", respuestaFinal.token);
   localStorage.setItem("user", JSON.stringify(respuestaFinal.user))
-  location.reload();
-  Home()
+  window.location.href = "/Home"
+  // location.reload();
+  // Home()
 };

@@ -1,10 +1,12 @@
 import Swal from 'sweetalert2'
 import { printEvents } from '../Home/Home';
 import { BASE_URL } from '../../../main';
+import { Profile } from '../../components/Profile/Profile';
 
 export const Events = async () => {
   const main = document.querySelector("main");
   main.innerHTML = "";
+  Profile()
 
   const user = JSON.parse(localStorage.getItem("user"));
 

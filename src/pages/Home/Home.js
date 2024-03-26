@@ -67,6 +67,7 @@ export const printEvents = (events, elementoPadre) => {
     imgEvent.className = "eventImg";
     date.textContent = event.date;
     place.textContent = event.place;
+    place.className = "place";
     description.textContent = event.description;
 
     divEvent.append(title, imgEvent, date, place, description, divButtons)
