@@ -1,78 +1,76 @@
-import { BASE_URL } from "../../../main";
-import { Home } from "../Home/Home";
-import "./Login.css";
+import { BASE_URL } from '../../../main'
+import { Header } from '../../components/Header/Header'
+import './Login.css'
 
 export const LoginPage = () => {
-  const divApp = document.querySelector("#app");
-  divApp.innerHTML = "";
+  const divApp = document.querySelector('#app')
+  divApp.innerHTML = ''
+  Header(divApp)
+  const loginDiv = document.createElement('div')
+  const h2 = document.createElement('h2')
+  h2.textContent = 'Identifícate'
 
-  const loginDiv = document.createElement("div");
-  const h2 = document.createElement("h2");
-  h2.textContent = "Identifícate"
+  loginDiv.appendChild(h2)
+  loginDiv.className = 'loginDiv'
 
-  loginDiv.appendChild(h2);
-  loginDiv.className = "loginDiv";
-
-  login(loginDiv);
-  divApp.appendChild(loginDiv);
-};
+  login(loginDiv)
+  divApp.appendChild(loginDiv)
+}
 
 const login = (elementoPadre) => {
-  const form = document.createElement("form");
+  const form = document.createElement('form')
 
-  const inputEmail = document.createElement("input");
-  const inputPassword = document.createElement("input");
-  const button = document.createElement("button");
+  const inputEmail = document.createElement('input')
+  const inputPassword = document.createElement('input')
+  const button = document.createElement('button')
 
-  inputEmail.placeholder = "Introduce tu email";
-  inputPassword.placeholder = "*****";
-  inputPassword.type = "password";
-  button.textContent = "Login";
-  button.className = "btnLogin"
+  inputEmail.placeholder = 'Introduce tu email'
+  inputPassword.placeholder = '*****'
+  inputPassword.type = 'password'
+  button.textContent = 'Login'
+  button.className = 'btnLogin'
 
-  elementoPadre.append(form);
-  form.append(inputEmail, inputPassword, button);
+  elementoPadre.append(form)
+  form.append(inputEmail, inputPassword, button)
 
-  form.addEventListener("submit", submit)
+  form.addEventListener('submit', submit)
 }
 
 const submit = async (e) => {
-  e.preventDefault();
+  e.preventDefault()
 
   const user = JSON.stringify({
     email: e.srcElement[0].value,
-    password: e.srcElement[1].value,
+    password: e.srcElement[1].value
   })
-  console.log(user);
+  console.log(user)
 
-  const res = await fetch(BASE_URL + "/users/login", {
-    method: "POST",
+  const res = await fetch(BASE_URL + '/users/login', {
+    method: 'POST',
     body: user,
     headers: {
-      "Content-Type": "application/json"
+      'Content-Type': 'application/json'
     }
   })
 
   if (res.status === 400) {
-    const loginDiv = document.querySelector(".loginDiv")
-    const pError = document.createElement("p")
-    pError.textContent = "Usuario o contraseña incorrectos"
-    pError.className = "error";
+    const loginDiv = document.querySelector('.loginDiv')
+    const pError = document.createElement('p')
+    pError.textContent = 'Usuario o contraseña incorrectos'
+    pError.className = 'error'
     loginDiv.append(pError)
-    return;
+    return
   }
-  const pError = document.querySelector(".error")
+  const pError = document.querySelector('.error')
   if (pError) {
-    pError.remove();
+    pError.remove()
   }
 
-  const respuestaFinal = await res.json();
+  const respuestaFinal = await res.json()
 
   console.log(respuestaFinal)
 
-  localStorage.setItem("token", respuestaFinal.token);
-  localStorage.setItem("user", JSON.stringify(respuestaFinal.user))
-  window.location.href = "/Home"
-  // location.reload();
-  // Home()
-};
+  localStorage.setItem('token', respuestaFinal.token)
+  localStorage.setItem('user', JSON.stringify(respuestaFinal.user))
+  window.location.href = '/Home'
+}

@@ -1,6 +1,6 @@
-.event{
+.event {
   width: 450px;
-  height: 550px;
+  height: 590px;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -18,10 +18,10 @@
 }
 .event > p {
   text-align: center;
-  padding:0, var(--padding-xs);
+  padding: 0, var(--padding-xs);
 }
-.place{
-  font-size:var(--font-size-ter) ;
+.place {
+  font-size: var(--font-size-ter);
 }
 .events {
   display: flex;
@@ -31,13 +31,14 @@
   gap: var(--gap-l);
   padding-top: var(--padding-m);
 }
-.buttons{
+.buttons {
   width: 60%;
-  display:flex ;
+  display: flex;
   justify-content: center;
-  gap: var(--gap-l)
+  gap: var(--gap-l);
 }
-.attend, .cancel{
+.attend,
+.cancel {
   padding: var(--padding-xs);
   border-radius: var(--secondary-br);
   font-size: var(--font-size-sec);
