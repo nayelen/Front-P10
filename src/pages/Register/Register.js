@@ -54,21 +54,6 @@ const submit = async (e) => {
       headers: { 'Content-Type': 'application/json' }
     })
     console.log(response)
-    if (!response.ok) {
-      throw new Error('Error al registrar usuario')
-    }
-    const loginResponse = await fetch(BASE_URL + '/users/login', {
-      method: 'POST',
-      body: JSON.stringify({
-        email: objetoEnvio.email,
-        password: objetoEnvio.password
-      }),
-      headers: { 'Content-Type': 'application/json' }
-    })
-    console.log(loginResponse)
-    if (!loginResponse.ok) {
-      throw new Error('Error al iniciar sesión')
-    }
 
     if (response.status === 400) {
       const registerDiv = document.querySelector('.registerDiv')
@@ -82,6 +67,20 @@ const submit = async (e) => {
     if (pError) {
       pError.remove()
     }
+
+    const loginResponse = await fetch(BASE_URL + '/users/login', {
+      method: 'POST',
+      body: JSON.stringify({
+        email: objetoEnvio.email,
+        password: objetoEnvio.password
+      }),
+      headers: { 'Content-Type': 'application/json' }
+    })
+    console.log(loginResponse)
+    if (!loginResponse.ok) {
+      throw new Error('Error al iniciar sesión')
+    }
+
     const loginSuccess = await loginResponse.json()
     const { token, user } = loginSuccess
     console.log(loginSuccess)
@@ -92,6 +91,6 @@ const submit = async (e) => {
     Home()
     location.reload()
   } catch (error) {
-    console.error('El registro ha fallado')
+    console.error('El registro ha fallado', error.message)
   }
 }
