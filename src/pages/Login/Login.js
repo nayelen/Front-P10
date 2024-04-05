@@ -1,5 +1,7 @@
 import { BASE_URL } from '../../../main'
+import { FieldForm } from '../../components/FieldForm/FieldForm'
 import { Header } from '../../components/Header/Header'
+import { optionsFetch } from '../../functions/Fetch'
 import './Login.css'
 
 export const LoginPage = () => {
@@ -19,58 +21,47 @@ export const LoginPage = () => {
 
 const login = (elementoPadre) => {
   const form = document.createElement('form')
-
-  const inputEmail = document.createElement('input')
-  const inputPassword = document.createElement('input')
-  const button = document.createElement('button')
-
-  inputEmail.placeholder = 'Introduce tu email'
-  inputPassword.placeholder = '*****'
-  inputPassword.type = 'password'
-  button.textContent = 'Login'
-  button.className = 'btnLogin'
-
+  form.innerHTML = `
+  ${FieldForm('Email: ')}
+  ${FieldForm('Password:')}
+  <button>Enviar</button>
+  `
   elementoPadre.append(form)
-  form.append(inputEmail, inputPassword, button)
-
   form.addEventListener('submit', submit)
 }
 
 const submit = async (e) => {
   e.preventDefault()
 
-  const user = JSON.stringify({
+  const user = {
     email: e.srcElement[0].value,
     password: e.srcElement[1].value
-  })
+  }
   console.log(user)
+  try {
+    const res = await optionsFetch(BASE_URL + '/users/login', 'POST', user)
 
-  const res = await fetch(BASE_URL + '/users/login', {
-    method: 'POST',
-    body: user,
-    headers: {
-      'Content-Type': 'application/json'
+    if (res.status === 400) {
+      const loginDiv = document.querySelector('.loginDiv')
+      const pError = document.createElement('p')
+      pError.textContent = 'Usuario o contraseña incorrectos'
+      pError.className = 'error'
+      loginDiv.append(pError)
+      return
     }
-  })
+    const pError = document.querySelector('.error')
+    if (pError) {
+      pError.remove()
+    }
 
-  if (res.status === 400) {
-    const loginDiv = document.querySelector('.loginDiv')
-    const pError = document.createElement('p')
-    pError.textContent = 'Usuario o contraseña incorrectos'
-    pError.className = 'error'
-    loginDiv.append(pError)
-    return
+    const respuestaFinal = res
+
+    console.log(respuestaFinal)
+
+    localStorage.setItem('token', respuestaFinal.token)
+    localStorage.setItem('user', JSON.stringify(respuestaFinal.user))
+    window.location.href = '/Home'
+  } catch (error) {
+    console.error('El login ha fallado', error.message)
   }
-  const pError = document.querySelector('.error')
-  if (pError) {
-    pError.remove()
-  }
-
-  const respuestaFinal = await res.json()
-
-  console.log(respuestaFinal)
-
-  localStorage.setItem('token', respuestaFinal.token)
-  localStorage.setItem('user', JSON.stringify(respuestaFinal.user))
-  window.location.href = '/Home'
 }

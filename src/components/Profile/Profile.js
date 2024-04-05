@@ -1,37 +1,5 @@
-import { Assistants } from '../../pages/Assistants/Assistants'
-import { DeleteEvent } from '../../pages/DeleteEvent/DeleteEvent'
-import { Events } from '../../pages/Events/Events'
-import { NewEvent } from '../../pages/NewEvent/NewEvent'
-import { UpdateProfile } from '../../pages/UpdateProfile/UpdateProfile'
-import { Users } from '../../pages/Users/Users'
+import { routesProfile } from '../../utils/data'
 import './Profile.css'
-
-const routesProfile = [
-  {
-    text: 'Mis Eventos',
-    page: null
-  },
-  {
-    text: 'Actualiza tus datos',
-    page: UpdateProfile
-  },
-  {
-    text: 'Crea un Evento',
-    page: NewEvent
-  },
-  {
-    text: 'Borrar un Evento',
-    page: DeleteEvent
-  },
-  {
-    text: 'Asistentes de un Evento',
-    page: Assistants
-  },
-  {
-    text: 'Datos Usuario',
-    page: Users
-  }
-]
 
 export const Profile = () => {
   const main = document.querySelector('main')

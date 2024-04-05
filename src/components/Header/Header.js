@@ -1,27 +1,7 @@
-import { Home } from '../../pages/Home/Home'
 import { LoginPage } from '../../pages/Login/Login'
-import { RegisterPage } from '../../pages/Register/Register'
-import { Profile } from '../Profile/Profile'
+import { routes } from '../../utils/data'
 import './Header.css'
 
-const routes = [
-  {
-    text: 'Inicio',
-    page: Home
-  },
-  {
-    text: 'Mi Perfil',
-    page: Profile
-  },
-  {
-    text: 'Login',
-    page: LoginPage
-  },
-  {
-    text: 'Register',
-    page: RegisterPage
-  }
-]
 export const Header = (divApp) => {
   const header = document.createElement('header')
   header.innerHTML = ''

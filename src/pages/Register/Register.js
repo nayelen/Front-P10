@@ -1,5 +1,7 @@
 import { BASE_URL } from '../../../main'
+import { FieldForm } from '../../components/FieldForm/FieldForm'
 import { Header } from '../../components/Header/Header'
+import { optionsFetch } from '../../functions/Fetch'
 import { Home } from '../Home/Home'
 import './Register.css'
 
@@ -21,21 +23,17 @@ export const RegisterPage = () => {
 
 const register = (elementoPadre) => {
   const form = document.createElement('form')
-  const inputName = document.createElement('input')
-  const inputEmail = document.createElement('input')
-  const inputPassword = document.createElement('input')
-  const button = document.createElement('button')
-
-  inputName.placeholder = 'Introduce tu nombre'
-  inputEmail.placeholder = 'Introduce tu email'
-  inputPassword.placeholder = 'Introduce tu password'
-  button.textContent = 'Regístrate'
-  button.className = 'btnRegister'
+  form.innerHTML = `
+  ${FieldForm('Nombre: ')}
+  ${FieldForm('Email:  ')}
+  ${FieldForm('Password:')}
+  <button>Enviar</button>
+  `
 
   elementoPadre.append(form)
-  form.append(inputName, inputEmail, inputPassword, button)
   form.addEventListener('submit', submit)
 }
+
 const submit = async (e) => {
   e.preventDefault()
 
@@ -45,14 +43,12 @@ const submit = async (e) => {
     password: e.srcElement[2].value
   }
 
-  const newUser = JSON.stringify(objetoEnvio)
-
   try {
-    const response = await fetch(BASE_URL + '/users/register', {
-      method: 'POST',
-      body: newUser,
-      headers: { 'Content-Type': 'application/json' }
-    })
+    const response = await optionsFetch(
+      BASE_URL + '/users/register',
+      'POST',
+      objetoEnvio
+    )
     console.log(response)
 
     if (response.status === 400) {
@@ -68,25 +64,23 @@ const submit = async (e) => {
       pError.remove()
     }
 
-    const loginResponse = await fetch(BASE_URL + '/users/login', {
-      method: 'POST',
-      body: JSON.stringify({
+    const loginResponse = await optionsFetch(
+      BASE_URL + '/users/login',
+      'POST',
+      {
         email: objetoEnvio.email,
         password: objetoEnvio.password
-      }),
-      headers: { 'Content-Type': 'application/json' }
-    })
+      }
+    )
     console.log(loginResponse)
-    if (!loginResponse.ok) {
+
+    if (!loginResponse.token) {
       throw new Error('Error al iniciar sesión')
     }
 
-    const loginSuccess = await loginResponse.json()
-    const { token, user } = loginSuccess
-    console.log(loginSuccess)
-    localStorage.setItem('token', token)
-    localStorage.setItem('user', JSON.stringify(user))
-    console.log(loginSuccess)
+    localStorage.setItem('token', loginResponse.token)
+    localStorage.setItem('user', JSON.stringify(loginResponse.user))
+    console.log(loginResponse)
 
     Home()
     location.reload()
