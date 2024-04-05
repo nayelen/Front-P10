@@ -2,6 +2,8 @@ import { BASE_URL } from '../../../main'
 import { FieldForm } from '../../components/FieldForm/FieldForm'
 import { Profile } from '../../components/Profile/Profile'
 import { optionsFetch } from '../../functions/Fetch'
+import { Home } from '../Home/Home'
+import Swal from 'sweetalert2'
 import './UpdateProfile.css'
 
 export const UpdateProfile = async () => {
@@ -38,7 +40,7 @@ const updateUser = async (e) => {
     email: e.target[0].value || user.email,
     password: e.target[1].value || user.password
   }
-  const res = await optionsFetch(
+  const respuestaFinal = await optionsFetch(
     BASE_URL + `/users/${user._id}`,
     'PUT',
     userUpdate,
@@ -46,7 +48,13 @@ const updateUser = async (e) => {
       Authorization: `Bearer ${localStorage.getItem('token')}`
     }
   )
-
-  const respuestaFinal = await res.json()
   console.log(respuestaFinal)
+  Swal.fire({
+    position: 'center',
+    icon: 'success',
+    title: 'Datos Actualizados!',
+    showConfirmButton: false,
+    timer: 1500
+  })
+  Home()
 }
